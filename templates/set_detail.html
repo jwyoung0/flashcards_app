@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>{{ set.title }}</h2>
+
+<!-- Set actions -->
+<a href="{{ url_for('edit_set', set_id=set.id) }}">Edit Set</a>
+<form action="{{ url_for('delete_set', set_id=set.id) }}" method="POST" style="display:inline;">
+    <button type="submit" onclick="return confirm('Delete this set?')">Delete Set</button>
+</form>
+<br>
 <a href="{{ url_for('add_question', set_id=set.id) }}">Add Question</a> |
 <a href="{{ url_for('take_quiz', set_id=set.id) }}">Take Quiz</a>
+
 <ul>
     {% for q in set.questions %}
-    <li>{{ q.question_text }}</li>
+    <li>
+        {{ q.question_text }}
+        <a href="{{ url_for('edit_question', question_id=q.id) }}">Edit</a>
+        <form action="{{ url_for('delete_question', question_id=q.id) }}" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm('Delete this question?')">Delete</button>
+        </form>
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}

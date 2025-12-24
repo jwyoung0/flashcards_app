@@ -78,5 +78,53 @@ def settings():
     num_questions = session.get('num_questions', 5)
     return render_template('settings.html', num_questions=num_questions)
 
+# --- Flashcard Set CRUD ---
+
+# Edit set
+@app.route('/set/<int:set_id>/edit', methods=['GET','POST'])
+def edit_set(set_id):
+    flashcard_set = FlashcardSet.query.get_or_404(set_id)
+    form = FlashcardSetForm(obj=flashcard_set)
+    if form.validate_on_submit():
+        flashcard_set.title = form.title.data
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('create_set.html', form=form, edit=True)
+
+# Delete set
+@app.route('/set/<int:set_id>/delete', methods=['POST'])
+def delete_set(set_id):
+    flashcard_set = FlashcardSet.query.get_or_404(set_id)
+    db.session.delete(flashcard_set)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+# --- Question CRUD ---
+
+# Edit question
+@app.route('/question/<int:question_id>/edit', methods=['GET','POST'])
+def edit_question(question_id):
+    question = Question.query.get_or_404(question_id)
+    form = QuestionForm(obj=question)
+    if form.validate_on_submit():
+        question.question_text = form.question_text.data
+        question.option_a = form.option_a.data
+        question.option_b = form.option_b.data
+        question.option_c = form.option_c.data
+        question.option_d = form.option_d.data
+        question.correct_option = form.correct_option.data
+        db.session.commit()
+        return redirect(url_for('set_detail', set_id=question.set_id))
+    return render_template('add_question.html', form=form, set=question.set, edit=True)
+
+# Delete question
+@app.route('/question/<int:question_id>/delete', methods=['POST'])
+def delete_question(question_id):
+    question = Question.query.get_or_404(question_id)
+    set_id = question.set_id
+    db.session.delete(question)
+    db.session.commit()
+    return redirect(url_for('set_detail', set_id=set_id))
+
 if __name__ == '__main__':
     app.run(debug=True)
