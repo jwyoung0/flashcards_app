@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flashcards App</title>
+</head>
+<body>
+    <h1>Flashcards App</h1>
+    <a href="{{ url_for('index') }}">Home</a> |
+    <a href="{{ url_for('create_set') }}">Create Set</a> |
+    <a href="{{ url_for('settings') }}">Settings</a>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
