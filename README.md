@@ -1,7 +1,6 @@
 # Flashcards App
 
-A simple Flask web application for creating flashcard sets, adding multiple-choice questions, and taking quizzes. Users can adjust the number of questions per quiz and choose the quiz style (all at once or one question per page).
-
+A simple Flask web application for creating flashcard sets, adding multiple-choice questions, and taking quizzes. Users can adjust the number of questions per quiz.
 ---
 
 ## Features

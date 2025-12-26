@@ -141,6 +141,7 @@ def take_quiz(set_id):
     num_questions = session.get('num_questions', 5)
 
     if request.method == 'GET':
+        # Pick random questions
         questions = random.sample(
             flashcard_set.questions,
             min(num_questions, len(flashcard_set.questions))
@@ -154,21 +155,37 @@ def take_quiz(set_id):
             finished=False
         )
 
+    # POST: grading
     question_ids = session.get('quiz_question_ids', [])
     questions = Question.query.filter(Question.id.in_(question_ids)).all()
 
-    score = sum(
-        1 for q in questions
-        if request.form.get(str(q.id)) == q.correct_option
-    )
+    # Build a per-question result list
+    results = []
+    score = 0
+
+    for q in questions:
+        selected = request.form.get(str(q.id))
+        correct = q.correct_option
+        is_correct = selected == correct
+        if is_correct:
+            score += 1
+
+        results.append({
+            'question': q,
+            'selected': selected,
+            'correct': correct,
+            'is_correct': is_correct
+        })
 
     return render_template(
         'quiz.html',
         set=flashcard_set,
         questions=questions,
         score=score,
-        finished=True
+        finished=True,
+        results=results
     )
+
 
 
 # ===============================

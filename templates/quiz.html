@@ -2,18 +2,35 @@
 {% block content %}
 <h2>Quiz: {{ set.title }}</h2>
 {% if finished %}
-<p>Your score: {{ score }}/{{ questions|length }}</p>
-<a href="{{ url_for('edit_set', set_id=set.id) }}">Back to Set</a>
-{% else %}
-<form method="POST">
-    {% for q in questions %}
-    <p>{{ loop.index }}. {{ q.question_text }}</p>
-    <input type="radio" name="{{ q.id }}" value="A"> {{ q.option_a }}<br>
-    <input type="radio" name="{{ q.id }}" value="B"> {{ q.option_b }}<br>
-    <input type="radio" name="{{ q.id }}" value="C"> {{ q.option_c }}<br>
-    <input type="radio" name="{{ q.id }}" value="D"> {{ q.option_d }}<br>
+    <h3>Score: {{ score }} / {{ questions|length }}</h3>
+
+    <ul>
+    {% for r in results %}
+        <li>
+            <strong>{{ r.question.question_text }}</strong><br>
+            Your answer: {{ r.selected or 'No answer' }}<br>
+            Correct answer: {{ r.correct }}<br>
+            {% if r.is_correct %}
+                ✅ Correct
+            {% else %}
+                ❌ Incorrect
+            {% endif %}
+        </li>
     {% endfor %}
-    <input type="submit" value="Submit Quiz">
-</form>
+    </ul>
+{% else %}
+    <form method="POST">
+        {% for q in questions %}
+            <div>
+                <p>{{ q.question_text }}</p>
+                <input type="radio" name="{{ q.id }}" value="A"> A. {{ q.option_a }}<br>
+                <input type="radio" name="{{ q.id }}" value="B"> B. {{ q.option_b }}<br>
+                <input type="radio" name="{{ q.id }}" value="C"> C. {{ q.option_c }}<br>
+                <input type="radio" name="{{ q.id }}" value="D"> D. {{ q.option_d }}<br>
+            </div>
+        {% endfor %}
+        <input type="submit" value="Submit Quiz">
+    </form>
 {% endif %}
+
 {% endblock %}
