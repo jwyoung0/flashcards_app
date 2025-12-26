@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired
 
 class FlashcardSetForm(FlaskForm):
@@ -7,10 +7,11 @@ class FlashcardSetForm(FlaskForm):
     submit = SubmitField('Create Set')
 
 class QuestionForm(FlaskForm):
-    question_text = StringField('Question', validators=[DataRequired()])
+    question_text = TextAreaField('Question', validators=[DataRequired()])
     option_a = StringField('Option A', validators=[DataRequired()])
     option_b = StringField('Option B', validators=[DataRequired()])
     option_c = StringField('Option C', validators=[DataRequired()])
     option_d = StringField('Option D', validators=[DataRequired()])
     correct_option = SelectField('Correct Option', choices=[('A','A'),('B','B'),('C','C'),('D','D')], validators=[DataRequired()])
+    continue_adding = BooleanField('Add another question after this one?')
     submit = SubmitField('Add Question')
