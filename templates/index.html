@@ -3,7 +3,7 @@
 <h2>Flashcard Sets</h2>
 <ul>
     {% for s in sets %}
-    <li><a href="{{ url_for('set_detail', set_id=s.id) }}">{{ s.title }}</a></li>
+    <li><a href="{{ url_for('edit_set', set_id=s.id) }}">{{ s.title }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

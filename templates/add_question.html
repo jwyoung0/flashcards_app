@@ -13,7 +13,7 @@
     <!-- Question textarea -->
     <div class="form-group">
         {{ form.question_text.label }}
-        {{ form.question_text(rows=4, class="form-control") }}
+        {{ form.question_text(rows=4, class="form-control", id="question_text") }}
     </div>
 
     <!-- Options stacked nicely -->
@@ -51,4 +51,13 @@
         {{ form.submit(class="btn btn-primary") }}
     </div>
 </form>
+
+<script>
+    window.onload = function () {
+        const questionBox = document.getElementById("question_text");
+        if (questionBox) {
+            questionBox.focus();
+        }
+    };
+</script>
 {% endblock %}

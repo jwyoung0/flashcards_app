@@ -3,7 +3,7 @@
 <h2>Quiz: {{ set.title }}</h2>
 {% if finished %}
 <p>Your score: {{ score }}/{{ questions|length }}</p>
-<a href="{{ url_for('set_detail', set_id=set.id) }}">Back to Set</a>
+<a href="{{ url_for('edit_set', set_id=set.id) }}">Back to Set</a>
 {% else %}
 <form method="POST">
     {% for q in questions %}
