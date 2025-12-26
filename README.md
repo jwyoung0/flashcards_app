@@ -6,13 +6,22 @@ A simple Flask web application for creating flashcard sets, adding multiple-choi
 
 ## Features
 
-- **Flashcard Sets**: Create, read, update, and delete flashcard sets.
-- **Questions**: Add, edit, and delete multiple-choice questions.
-- **Quiz Mode**:
-  - Take a quiz from any flashcard set.
-  - Choose the number of questions per quiz.
-  - Quiz style: all questions at once or one question per page.
-- **Settings**: Store quiz preferences in session.
+- **Flashcard Sets**
+  - Create, edit, and delete flashcard sets
+  - Manage all set content from a single Edit Set page
+
+- **Questions**
+  - Add questions inline
+  - Edit and delete questions
+  - Multiple-choice format (A–D)
+
+- **Quiz Mode**
+  - Take a quiz from any flashcard set
+  - Choose number of questions per quiz
+  - Randomized question selection
+
+- **Settings**
+  - Store quiz preferences
 
 ---
 
@@ -29,10 +38,9 @@ flashcards_app/
 │   ├── base.html
 │   ├── index.html
 │   ├── create_set.html
-│   ├── set_detail.html
+│   ├── edit_set.html
 │   ├── add_question.html
-│   ├── quiz.html
-│   ├── quiz_one.html
+│   ├── quiz.html 
 │   └── settings.html
 ├── static/
 └── requirements.txt
@@ -91,17 +99,30 @@ python app.py
 
 1. Navigate to **Home** to see all flashcard sets.
 2. Create a new set using **Create Set**.
-3. Add multiple-choice questions to your set.
-4. Take a quiz from the set, using your preferred quiz style.
+3. Manage a set from the Edit Set page:
+    - Rename the set
+    - Add questions inline
+    - Edit or delete questions
+4. Take a quiz from the set
 5. Adjust quiz settings via **Settings**.
+
+💡 Tip: Press **Ctrl + Enter** when adding questions to submit quickly.
+
+---
+
+## UX Enhancements
+
+- One-page set management
+- Inline question creation with instant feedback
+- Card-style layout for questions
+- Keyboard shortcut: **Ctrl + Enter** to add the next question
+- Confirmation prompts for destructive actions
 
 ---
 
 ## Notes
 
 * The app uses **SQLite** for the database (`flashcards.db`).
-* Quiz settings are stored in the **session**, so they are temporary per browser session.
-* Deleting a flashcard set will delete all its questions (cascade delete).
 
 ---
 
