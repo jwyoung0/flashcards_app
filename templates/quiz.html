@@ -2,23 +2,53 @@
 {% block content %}
 <h2>Quiz: {{ set.title }}</h2>
 {% if finished %}
-    <h3>Score: {{ score }} / {{ questions|length }}</h3>
+<div class="quiz-results">
 
-    <ul>
-    {% for r in results %}
-        <li>
-            <strong>{{ r.question.question_text }}</strong><br>
-            Your answer: {{ r.selected or 'No answer' }}<br>
-            Correct answer: {{ r.correct }}<br>
+    <div class="score-card">
+        <h3>Your Score</h3>
+        <p class="score">{{ score }} / {{ questions|length }}</p>
+    </div>
+
+    <div class="question-cards">
+        {% for r in results %}
+        <div class="question-card {% if r.is_correct %}correct{% else %}incorrect{% endif %}">
+            <p class="question-text">
+                {{ loop.index }}. {{ r.question.question_text }}
+            </p>
+
             {% if r.is_correct %}
-                ✅ Correct
+                <p class="answer correct-answer">
+                    ✅ Correct: {{ r.correct_text }}
+                </p>
             {% else %}
-                ❌ Incorrect
+                <p class="answer user-answer">
+                    ❌ Your answer: {{ r.selected_text or "No answer" }}
+                </p>
+                <p class="answer correct-answer">
+                    ✔ Correct answer: {{ r.correct_text }}
+                </p>
             {% endif %}
-        </li>
-    {% endfor %}
-    </ul>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="quiz-nav sticky">
+        <a href="{{ url_for('take_quiz', set_id=set.id) }}" class="btn btn-primary">
+            🔁 Retake Quiz
+        </a>
+
+        <a href="{{ url_for('edit_set', set_id=set.id) }}" class="btn btn-secondary">
+            📚 Back to Set
+        </a>
+
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">
+            🏠 Home
+        </a>
+    </div>
+
+</div>
 {% else %}
+
     <form method="POST">
         {% for q in questions %}
             <div>

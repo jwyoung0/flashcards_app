@@ -171,10 +171,12 @@ def take_quiz(set_id):
             score += 1
 
         results.append({
-            'question': q,
-            'selected': selected,
-            'correct': correct,
-            'is_correct': is_correct
+        "question": q,
+        "selected_letter": selected,
+        "selected_text": q.get_option_text(selected) if selected else None,
+        "correct_letter": correct,
+        "correct_text": q.get_option_text(correct),
+        "is_correct": is_correct
         })
 
     return render_template(
